@@ -77,3 +77,95 @@ Possibly allow optional fields, but check their format if provided
 
 
 
+# WORKING
+
+## 1. Client Sends an HTTP Request
+The client can be a frontend app, mobile app, or any HTTP client like Postman.
+
+It sends a request to your server’s endpoint (URL).
+
+The request includes:
+
+HTTP method (GET, POST, PUT, PATCH, DELETE)
+
+URL (resource path, e.g., /users/5)
+
+Optional headers (authentication tokens, content-type)
+
+Optional body (data sent for POST/PUT/PATCH)
+
+
+
+## 2. Express Server Receives the Request
+Your Node.js app runs an Express server that listens on a specific port (e.g., 3000).
+
+Express waits for incoming HTTP requests.
+
+
+
+## 3. Routing: Matching Request to Route
+Express compares the request URL and HTTP method against the routes you've defined.
+
+For example, a GET /users/5 request will match a route like:
+
+app.get('/users/:id', handlerFunction);
+The :id is a route parameter extracted from the URL (5 in this case).
+
+
+
+## 4. Middleware Processing
+Before the route handler executes, middleware functions can process the request.
+
+Common middleware tasks:
+
+Parsing JSON bodies (express.json())
+
+Logging requests
+
+Checking authentication tokens
+
+Validating input data
+
+Middleware acts like a pipeline: each middleware calls next() to pass control to the next middleware or to the route handler.
+
+## 5. Controller (Route Handler) Executes Logic
+The route handler (also called controller) contains the logic to:
+
+Extract data from the request (params, query, body).
+
+Perform business logic (e.g., fetch data, update database).
+
+Interact with the database or other services.
+
+Prepare a response.
+
+Example for GET /users/:id:
+
+Extract id from req.params.
+
+Fetch the user record from the database.
+
+If found, return user data.
+
+If not found, return 404 error.
+
+
+
+## 6. Send Response
+The server sends a response back to the client.
+
+Response contains:
+
+Status code (e.g., 200 OK, 201 Created, 404 Not Found)
+
+Headers (like Content-Type: application/json)
+
+Body (usually JSON data representing the resource or error info)
+
+
+
+## 7. Client Receives and Processes the Response
+The client reads the response.
+
+Based on the response status and data, the client updates UI or handles errors.
+
